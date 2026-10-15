@@ -1,0 +1,477 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Binding Spell</title>
+<meta name="description" content="Knihobot Spooky Dinner – pozvánka">
+<meta property="og:title" content="The Binding Spell – Knihobot Spooky Dinner">
+<meta property="og:description" content="Smlouva č. 0311. Nepřítomnost se neodpouští.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Raleway:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   NASTAVENÍ – napojení na Google Formulář
+   ============================================================ */
+</style>
+<script>
+window.RSVP_CONFIG = {
+  formAction: "https://docs.google.com/forms/d/e/1FAIpQLSckusYNZDhcdo0XZhIxOduuqa4PwENzudW_byVOfXkHg4u2KQ/formResponse",
+  fields: {
+    name:   "entry.1819944885",  // Jméno a příjmení
+    city:   "entry.1566324332",  // Město (Praha 3. 11. / Bratislava 4. 11.)
+    attend: "entry.887593315",   // Přijde (Ano / Ne)
+    diet:   "entry.1180935246",  // Alergie, speciální strava
+    photo:  "entry.539493224"    // Souhlas s focením (Ano / Ne)
+  },
+  // přesné texty možností u otázky Město ve formuláři
+  cityValues: { praha: "Praha 3. 11.", bratislava: "Bratislava 4. 11." }
+};
+</script>
+<style>
+/* Layout: jeden svitek uprostřed tmavého sklepa, svíčky po stranách, jiskry stoupají zespodu. Single dark theme (záměrně). */
+:root{
+  --night:#0b0807;
+  --cellar:#17110d;
+  --parchment:#e9dcc0;
+  --parchment-deep:#d4c09b;
+  --ink:#2a1a12;
+  --ink-soft:#5b4232;
+  --wax:#7d1620;
+  --brand:#264D39;
+  --brand-hi:#3a6b52;
+  --wax-hi:#a8303a;
+  --flame:#f3a54a;
+  --ember:#ff7a2e;
+  --display:"Playfair Display",Georgia,"Times New Roman",serif;
+  --script:"Playfair Display",Georgia,"Times New Roman",serif;
+  --label:"Raleway","Helvetica Neue",Arial,sans-serif;
+  --body:"Raleway","Helvetica Neue",Arial,sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{min-height:100%}
+body{
+  margin:0;background:var(--night);color:var(--parchment);
+  font-family:var(--body);font-size:17px;line-height:1.6;
+  padding-inline:16px;padding-block:calc(env(safe-area-inset-top,0px) + 40px) calc(env(safe-area-inset-bottom,0px) + 56px);
+  overflow-x:hidden;
+}
+#embers{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}
+.vignette{position:fixed;inset:0;pointer-events:none;z-index:1;
+  background:
+    radial-gradient(60% 45% at 50% 30%, rgba(243,165,74,.10), transparent 70%),
+    radial-gradient(120% 90% at 50% 50%, transparent 40%, rgba(0,0,0,.85) 100%);
+  animation:breathe 5s ease-in-out infinite}
+@keyframes breathe{50%{opacity:.82}}
+
+.stage{position:relative;z-index:2;max-width:640px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:28px}
+
+.brandmark{display:grid;justify-items:center;gap:10px}
+.brandmark img{width:150px;height:auto;opacity:.92}
+.eyebrow{font-family:var(--label);letter-spacing:.32em;text-transform:uppercase;font-size:.72rem;color:var(--flame);opacity:.85;text-align:center}
+
+/* svíčky */
+.candles{display:flex;justify-content:space-between;align-items:flex-end;width:min(100%,560px);margin-bottom:-56px;pointer-events:none}
+.candle{position:relative;width:22px;height:96px}
+.candle::before{content:"";position:absolute;bottom:0;left:0;width:22px;height:70px;border-radius:3px 3px 1px 1px;
+  background:linear-gradient(90deg,#cbb89a,#efe3cc 45%,#b8a283)}
+.candle .flame{position:absolute;left:50%;bottom:68px;width:12px;height:26px;margin-left:-6px;border-radius:50% 50% 45% 45%/60% 60% 40% 40%;
+  background:radial-gradient(ellipse at 50% 80%,#fff6d8 0 20%,var(--flame) 45%,rgba(255,122,46,.0) 75%);
+  filter:blur(.4px);transform-origin:50% 100%;animation:flicker 1.6s infinite alternate}
+.candle .glow{position:absolute;left:50%;bottom:50px;width:160px;height:160px;margin-left:-80px;border-radius:50%;
+  background:radial-gradient(circle,rgba(243,165,74,.28),transparent 65%);animation:glow 2.4s infinite alternate}
+.candle:nth-child(2) .flame{animation-duration:1.3s}
+@keyframes flicker{0%{transform:scale(1,1) rotate(-1deg)}30%{transform:scale(.92,1.08) rotate(2deg)}60%{transform:scale(1.05,.95) rotate(-2deg)}100%{transform:scale(.97,1.04) rotate(1deg)}}
+@keyframes glow{to{opacity:.6;transform:scale(1.08)}}
+
+/* svitek */
+.scroll{position:relative;width:100%;filter:drop-shadow(0 30px 50px rgba(0,0,0,.7))}
+.rod{height:22px;border-radius:11px;margin-inline:-10px;position:relative;z-index:2;
+  background:linear-gradient(180deg,#4a2e1d,#8a5a35 45%,#3a2216);box-shadow:0 4px 10px rgba(0,0,0,.6)}
+.rod::before,.rod::after{content:"";position:absolute;top:-4px;width:30px;height:30px;border-radius:50%;
+  background:radial-gradient(circle at 35% 35%,#b98a4f,#5a3a22 70%)}
+.rod::before{left:-14px}.rod::after{right:-14px}
+.paper{position:relative;margin-inline:6px;color:var(--ink);
+  padding:clamp(28px,6vw,56px) clamp(22px,6vw,58px) clamp(34px,6vw,60px);
+  background:
+    radial-gradient(120% 60% at 50% 0%,rgba(255,255,255,.35),transparent 60%),
+    radial-gradient(80% 50% at 10% 90%,rgba(120,70,30,.22),transparent 70%),
+    radial-gradient(70% 40% at 95% 60%,rgba(120,70,30,.18),transparent 70%),
+    linear-gradient(180deg,var(--parchment),var(--parchment-deep));
+  overflow:hidden;
+  transform-origin:top center;animation:unroll 1.6s cubic-bezier(.2,.7,.2,1) both}
+.paper::after{content:"";position:absolute;inset:0;pointer-events:none;
+  box-shadow:inset 0 0 60px rgba(70,35,10,.45), inset 0 0 8px rgba(40,20,5,.5)}
+@keyframes unroll{from{clip-path:inset(0 0 100% 0)}to{clip-path:inset(0 0 0 0)}}
+.rod.bottom{animation:drop 1.6s cubic-bezier(.2,.7,.2,1) both}
+@keyframes drop{from{transform:translateY(-40px)}to{transform:none}}
+/* ohořelý spodní okraj */
+.burn{position:absolute;left:0;right:0;bottom:0;height:34px;pointer-events:none;opacity:.55;
+  background:linear-gradient(0deg,rgba(30,12,4,.75),transparent);
+  -webkit-mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 46' preserveAspectRatio='none'><path d='M0 46 L0 26 Q20 14 34 24 T70 18 T110 28 T150 16 T196 26 T238 14 T282 24 T326 12 T366 22 T400 16 L400 46 Z' fill='black'/></svg>") bottom/100% 100% no-repeat;
+          mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 46' preserveAspectRatio='none'><path d='M0 46 L0 26 Q20 14 34 24 T70 18 T110 28 T150 16 T196 26 T238 14 T282 24 T326 12 T366 22 T400 16 L400 46 Z' fill='black'/></svg>") bottom/100% 100% no-repeat}
+.smoulder{position:absolute;left:0;right:0;bottom:0;height:3px;
+  background:linear-gradient(90deg,transparent,var(--ember),#ffd08a,var(--ember),transparent);
+  filter:blur(2px);opacity:.8;animation:smoulder 3s ease-in-out infinite}
+@keyframes smoulder{50%{opacity:.35;transform:scaleX(.9)}}
+
+.paper > *{position:relative;z-index:1}
+.paper > .burn,.paper > .smoulder{position:absolute}
+.contract-no{font-family:var(--label);letter-spacing:.24em;font-size:.72rem;color:var(--ink-soft);text-align:center;text-transform:uppercase}
+h1{font-family:var(--display);font-weight:400;font-style:italic;text-align:center;line-height:1.02;margin:.35em 0 .1em;
+  font-size:clamp(2.3rem,9vw,3.6rem);letter-spacing:.02em;color:#1d0f09;text-wrap:balance}
+.sub{font-family:var(--script);font-style:italic;text-align:center;color:var(--brand);font-size:1.1rem;margin:0}
+.rule{height:1px;margin:26px auto;width:70%;background:linear-gradient(90deg,transparent,rgba(42,26,18,.55),transparent)}
+.story{font-size:1.12rem;max-width:34em;margin:0 auto;text-align:left;text-wrap:pretty}
+.story .drop{font-family:var(--display);float:left;font-size:3.4em;line-height:.8;padding:6px 8px 0 0;color:var(--brand)}
+.terms{list-style:none;padding:0;margin:26px 0 0;display:grid;gap:10px}
+.terms li{display:grid;grid-template-columns:7.5em 1fr;gap:12px;align-items:baseline;border-bottom:1px dotted rgba(42,26,18,.35);padding-bottom:8px}
+.terms b{font-family:var(--label);font-weight:400;letter-spacing:.14em;text-transform:uppercase;font-size:.72rem;color:var(--ink-soft)}
+.terms span{min-width:0}
+.clause{margin:22px 0 0;font-family:var(--script);font-style:italic;text-align:center;color:var(--ink-soft)}
+
+/* volba města */
+.cities{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:18px}
+.cities button{font:inherit;font-family:var(--label);letter-spacing:.16em;text-transform:uppercase;font-size:.75rem;
+  background:transparent;color:var(--ink-soft);border:1px solid rgba(42,26,18,.4);border-radius:999px;padding:7px 16px;cursor:pointer}
+.cities button[aria-pressed="true"]{background:var(--ink);color:var(--parchment);border-color:var(--ink)}
+
+/* formulář */
+form{margin-top:30px;display:grid;gap:18px}
+.field{display:grid;gap:6px}
+label,.legend{font-family:var(--label);letter-spacing:.16em;text-transform:uppercase;font-size:.72rem;color:var(--ink-soft)}
+input[type=text],input[type=email],textarea{
+  font:inherit;font-size:1.1rem;color:var(--ink);background:transparent;border:0;border-bottom:1px solid rgba(42,26,18,.55);
+  padding:6px 2px;border-radius:0;width:100%}
+textarea{resize:vertical;min-height:2.6em}
+input:focus,textarea:focus{outline:none;border-bottom-color:var(--brand);box-shadow:0 1px 0 var(--brand)}
+.choice{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.choice input{position:absolute;opacity:0;pointer-events:none}
+.choice label{display:block;text-transform:none;letter-spacing:0;font-family:var(--script);font-size:1.02rem;color:var(--ink);
+  border:1px solid rgba(42,26,18,.45);padding:12px 14px;border-radius:4px;cursor:pointer;text-align:center;line-height:1.25;
+  transition:background .2s,border-color .2s,color .2s}
+.choice label small{display:block;font-family:var(--body);font-size:.85rem;color:var(--ink-soft);margin-top:2px}
+.choice input:checked + label{background:var(--brand);border-color:var(--brand);color:#eef3ec}
+.choice input:checked + label small{color:#cfe0d4}
+.choice input:focus-visible + label{outline:2px solid var(--brand);outline-offset:2px}
+.check{display:flex;gap:10px;align-items:flex-start;font-size:1rem;color:var(--ink)}
+.check input{margin-top:5px;accent-color:var(--brand);width:18px;height:18px;flex:none}
+.check label{text-transform:none;letter-spacing:0;font-family:var(--body);font-size:1rem;color:var(--ink)}
+.only-yes[hidden]{display:none!important}
+
+.seal-btn{justify-self:center;margin-top:8px;width:132px;height:132px;border-radius:50%;border:0;cursor:pointer;position:relative;
+  font-family:var(--label);letter-spacing:.12em;text-transform:uppercase;font-size:.78rem;color:#f6e1cf;line-height:1.2;
+  background:radial-gradient(circle at 38% 32%,var(--wax-hi),var(--wax) 55%,#4c0b11);
+  box-shadow:0 8px 20px rgba(60,5,10,.45), inset 0 -6px 14px rgba(0,0,0,.35), inset 0 4px 10px rgba(255,255,255,.12);
+  clip-path:polygon(50% 0,61% 4%,72% 2%,80% 10%,90% 12%,93% 23%,100% 31%,97% 42%,100% 52%,95% 62%,98% 73%,89% 81%,86% 92%,75% 93%,66% 100%,55% 96%,45% 100%,35% 95%,24% 98%,17% 88%,7% 84%,6% 72%,0 63%,4% 52%,0 41%,6% 31%,8% 20%,18% 15%,24% 5%,35% 6%);
+  transition:transform .2s}
+.seal-btn:hover{transform:rotate(-4deg) scale(1.03)}
+.seal-btn:focus-visible{outline:3px solid var(--flame);outline-offset:6px}
+.seal-btn[disabled]{opacity:.6;cursor:wait}
+.seal-btn .ring{position:absolute;inset:16px;border-radius:50%;border:1px solid rgba(255,220,200,.35);display:grid;place-items:center;padding:8px}
+.err{color:var(--brand);font-style:italic;text-align:center;min-height:1.2em;margin:0}
+.privacy{font-size:.85rem;color:var(--ink-soft);text-align:center;margin:0}
+
+/* potvrzení */
+.done{text-align:center;display:grid;gap:14px;padding-top:10px}
+.done .stamp{font-family:var(--display);font-size:clamp(2rem,8vw,2.8rem);color:var(--brand);letter-spacing:.04em;
+  transform:rotate(-6deg);border:3px double var(--brand);padding:6px 18px;justify-self:center;animation:stamp .5s cubic-bezier(.3,1.6,.5,1) both}
+@keyframes stamp{from{transform:rotate(-6deg) scale(2.2);opacity:0}to{transform:rotate(-6deg) scale(1);opacity:1}}
+.done p{margin:0;font-size:1.12rem}
+.done .again{font:inherit;font-size:.9rem;background:none;border:0;color:var(--ink-soft);text-decoration:underline;cursor:pointer;justify-self:center}
+
+.foot{font-family:var(--label);letter-spacing:.3em;text-transform:uppercase;font-size:.66rem;color:rgba(233,220,192,.45);text-align:center}
+.testmode{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(env(safe-area-inset-bottom,0px) + 10px);z-index:5;
+  background:#2b1d14;color:var(--flame);font-size:.8rem;padding:6px 12px;border-radius:999px;border:1px solid rgba(243,165,74,.4)}
+
+
+
+/* létající spell jar */
+.jar{position:relative;z-index:4;width:104px;margin-bottom:84px;pointer-events:none;
+  filter:drop-shadow(0 10px 18px rgba(0,0,0,.55)) drop-shadow(0 0 22px rgba(243,165,74,.25));
+  animation:float 6s ease-in-out infinite}
+.jar svg{display:block;width:100%;height:auto}
+.jar .wisp{position:absolute;left:30%;top:-46px;width:40%;height:60px;opacity:.5;
+  background:radial-gradient(ellipse at 50% 100%,rgba(233,220,192,.35),transparent 70%);filter:blur(6px);
+  animation:wisp 4s ease-in-out infinite}
+@keyframes float{0%{transform:translate(0,0) rotate(8deg)}25%{transform:translate(-6px,-14px) rotate(3deg)}
+  50%{transform:translate(-2px,-24px) rotate(-4deg)}75%{transform:translate(4px,-10px) rotate(2deg)}100%{transform:translate(0,0) rotate(8deg)}}
+@keyframes wisp{0%{transform:translateY(8px) scaleX(.8);opacity:0}40%{opacity:.5}100%{transform:translateY(-18px) scaleX(1.3);opacity:0}}
+.jar-glint{animation:glint 5s ease-in-out infinite}
+@keyframes glint{0%,70%,100%{opacity:.15}80%{opacity:.55}}
+@media (max-width:480px){.jar{width:84px;margin-bottom:80px}}
+
+@media (max-width:480px){
+  body{font-size:16px}
+  .terms li{grid-template-columns:1fr;gap:2px}
+  .choice{grid-template-columns:1fr}
+  .candles{margin-bottom:-60px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+</style>
+</head>
+<body>
+<canvas id="embers" aria-hidden="true"></canvas>
+<div class="vignette" aria-hidden="true"></div>
+
+<main class="stage">
+  <div class="brandmark"><img src="data:image/png;base64,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" alt="Knihobot" width="180" height="31"><span class="eyebrow">Spooky Dinner</span></div>
+
+  <div class="candles" aria-hidden="true">
+    <div class="candle"><span class="glow"></span><span class="flame"></span></div>
+      <div class="jar" aria-hidden="true">
+      <span class="wisp"></span>
+      <svg viewBox="0 0 100 190" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <clipPath id="jarIn"><rect x="17" y="44" width="66" height="138" rx="10"/></clipPath>
+          <linearGradient id="glass" x1="0" x2="1"><stop offset="0" stop-color="#fff" stop-opacity=".28"/><stop offset=".25" stop-color="#fff" stop-opacity=".05"/><stop offset=".8" stop-color="#fff" stop-opacity=".04"/><stop offset="1" stop-color="#fff" stop-opacity=".22"/></linearGradient>
+          <linearGradient id="cork" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#b98a58"/><stop offset="1" stop-color="#8a6038"/></linearGradient>
+          <radialGradient id="ame" cx=".35" cy=".3"><stop offset="0" stop-color="#b48ad6"/><stop offset=".6" stop-color="#6a3d8f"/><stop offset="1" stop-color="#3d1f57"/></radialGradient>
+          <radialGradient id="amber" cx=".35" cy=".3"><stop offset="0" stop-color="#e8a050"/><stop offset=".7" stop-color="#8a3d12"/><stop offset="1" stop-color="#4a1d08"/></radialGradient>
+        </defs>
+        <g clip-path="url(#jarIn)">
+          <rect x="17" y="150" width="66" height="34" fill="#efe6c8"/>
+          <g fill="#f3e8cf" opacity=".7"><circle cx="24" cy="160" r="1.2"/><circle cx="40" cy="168" r="1"/><circle cx="58" cy="158" r="1.3"/><circle cx="72" cy="172" r="1"/><circle cx="33" cy="176" r="1.1"/></g>
+          <path d="M17 150 L17 118 L26 112 L34 120 L44 110 L55 119 L64 111 L74 120 L83 114 L83 150 Z" fill="#e9b7b4"/>
+          <g fill="#f4cfca" opacity=".8"><path d="M22 140 l8 -10 l7 9 z"/><path d="M48 146 l9 -12 l8 11 z"/><path d="M66 132 l7 -9 l6 8 z"/><path d="M34 128 l6 -8 l6 7 z"/></g>
+          <path d="M17 118 L26 112 L34 120 L44 110 L55 119 L64 111 L74 120 L83 114 L83 96 L17 98 Z" fill="#6f6b8e"/>
+          <g stroke="#9b95c0" stroke-width="2.2" stroke-linecap="round"><path d="M24 108 l6 -6"/><path d="M38 104 l4 -7"/><path d="M52 110 l7 -5"/><path d="M66 104 l5 -6"/><path d="M76 110 l4 -6"/></g>
+          <g fill="#f2a62a"><path d="M30 92 q6 -10 13 -2 q-5 8 -13 2z"/><path d="M48 96 q8 -9 14 1 q-7 6 -14 -1z"/><path d="M62 88 q7 -8 12 1 q-6 6 -12 -1z"/><path d="M20 96 q5 -7 10 0 q-5 5 -10 0z"/></g>
+          <g fill="#ffcb52" opacity=".85"><circle cx="38" cy="90" r="2"/><circle cx="56" cy="93" r="1.8"/><circle cx="68" cy="86" r="1.6"/></g>
+          <ellipse cx="34" cy="74" rx="12" ry="10" fill="url(#ame)"/>
+          <ellipse cx="62" cy="70" rx="13" ry="11" fill="url(#ame)"/>
+          <ellipse cx="48" cy="82" rx="11" ry="9" fill="url(#amber)"/>
+          <ellipse cx="30" cy="70" rx="3" ry="2" fill="#fff" opacity=".4"/>
+          <ellipse cx="58" cy="65" rx="3.5" ry="2" fill="#fff" opacity=".4"/>
+        </g>
+        <rect x="17" y="44" width="66" height="138" rx="10" fill="url(#glass)" stroke="rgba(255,255,255,.55)" stroke-width="1.6"/>
+        <rect class="jar-glint" x="22" y="52" width="5" height="118" rx="2.5" fill="#fff"/>
+        <rect x="24" y="30" width="52" height="18" rx="4" fill="rgba(255,255,255,.12)" stroke="rgba(255,255,255,.5)" stroke-width="1.4"/>
+        <rect x="29" y="12" width="42" height="28" rx="4" fill="url(#cork)"/>
+        <g fill="#6d4a2b" opacity=".5"><circle cx="36" cy="20" r="1.2"/><circle cx="50" cy="26" r="1"/><circle cx="62" cy="18" r="1.3"/><circle cx="44" cy="33" r="1"/><circle cx="58" cy="31" r="1.1"/></g>
+        <path d="M26 12 Q26 4 50 4 Q74 4 74 12 L74 16 Q70 14 68 22 L66 48 Q64 54 62 48 L61 18 Q50 16 40 18 L37 30 Q35 36 33 30 L31 16 Q28 14 26 16 Z" fill="#d89a22"/>
+        <path d="M74 12 Q80 14 79 26 L80 64 Q80 72 76 66 L75 30 Q74 20 70 16 Z" fill="#c98c1c"/>
+        <ellipse cx="50" cy="8" rx="15" ry="3.6" fill="#f0b83c" opacity=".7"/>
+        <circle cx="50" cy="8" r="5" fill="none" stroke="#b07a14" stroke-width="1.2"/>
+      </svg>
+    </div>
+    <div class="candle"><span class="glow"></span><span class="flame"></span></div>
+  </div>
+
+  <div class="scroll">
+    <div class="rod"></div>
+    <article class="paper">
+      <p class="contract-no" data-t="no">Smlouva č. 0311</p>
+      <h1>The Binding Spell</h1>
+      <p class="sub" data-t="sub">Zaklínadlo vazby</p>
+
+      <div class="cities" role="group" aria-label="Město">
+        <button type="button" id="city-praha" data-city="praha" aria-pressed="true">Praha · 3. 11.</button>
+        <button type="button" id="city-ba" data-city="bratislava" aria-pressed="false">Bratislava · 4. 11.</button>
+      </div>
+
+      <div class="rule"></div>
+
+      <p class="story"><span class="drop" aria-hidden="true" data-t="drop">R</span><span data-t="story"></span></p>
+
+      <ul class="terms">
+        <li><b data-t="lWhen">Kdy</b><span data-t="when"></span></li>
+        <li><b data-t="lWhere">Kde</b><span data-t="where"></span></li>
+        <li><b data-t="lDress">Dress code</b><span data-t="dress"></span></li>
+      </ul>
+      <p class="clause" data-t="clause"></p>
+
+      <div class="rule"></div>
+
+      <form id="rsvp" novalidate>
+        <div class="field">
+          <span class="legend" data-t="lAttend">Přijdete?</span>
+          <div class="choice">
+            <input type="radio" name="attend" id="att-yes" value="Ano">
+            <label for="att-yes"><span data-t="yes">Podepisuji. Přijdu.</span></label>
+            <input type="radio" name="attend" id="att-no" value="Ne">
+            <label for="att-no"><span data-t="no2">Tentokrát ne.</span></label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="f-name" data-t="lName">Jméno a příjmení</label>
+          <input type="text" id="f-name" name="name" autocomplete="name" required>
+        </div>
+
+        <div class="field only-yes" hidden>
+          <label for="f-diet" data-t="lDiet">Strava a alergie</label>
+          <input type="text" id="f-diet" name="diet" data-tp="dietPh">
+        </div>
+        <div class="check only-yes" hidden>
+          <input type="checkbox" id="f-photo" name="photo" checked>
+          <label for="f-photo" data-t="photo">Můžete mě na akci fotit a natáčet.</label>
+        </div>
+
+        <p class="err" id="err" role="alert"></p>
+        <button class="seal-btn" type="submit" id="submit"><span class="ring" data-t="seal">Zapečetit</span></button>
+        <p class="privacy" data-t="privacy"></p>
+      </form>
+
+      <div class="done" id="done" hidden>
+        <div class="stamp" id="stamp"></div>
+        <p id="done-text"></p>
+        <button class="again" type="button" id="again" data-t="again">Změnit odpověď</button>
+      </div>
+
+      <div class="burn" aria-hidden="true"></div>
+      <div class="smoulder" aria-hidden="true"></div>
+    </article>
+    <div class="rod bottom"></div>
+  </div>
+
+  <p class="foot">Knihobot · MMXXVI</p>
+</main>
+
+<div class="testmode" id="testmode" hidden>Testovací režim – odpovědi se zatím nikam neukládají</div>
+
+<script>
+const T = {
+  praha: {
+    lang:"cs",
+    no:"Smlouva č. 0311", sub:"Zaklínadlo vazby", drop:"R",
+    story:"ok 1726. Mefisto roztrhal zaklínadlo knihvazačky Doroty na pět veršů. V noci po Dušičkách ho složíme.",
+    lWhen:"Kdy", when:"Út 3. 11. 2026, 18:30",
+    lWhere:"Kde", where:"Vilemína v kavárně Anežka, Staré Město",
+    lDress:"Dress code", dress:"Temná elegance",
+    clause:"Nepřítomnost se neodpouští.",
+    lAttend:"Přijdete?", yes:"Podepisuji. Přijdu.", yesSmall:"Kruh se mnou může počítat",
+    no2:"Tentokrát ne.", noSmall:"Mefisto si mě nevezme",
+    lName:"Jméno a příjmení", lDiet:"Strava a alergie", dietPh:"vegan, bez lepku, ořechy…",
+    photo:"Můžete mě na akci fotit a natáčet.",
+    lNote:"Vzkaz pro hostitelku (nepovinné)", seal:"Zapečetit",
+    privacy:"Údaje použijeme jen k organizaci večera.",
+    again:"Změnit odpověď",
+    errAttend:"Vyberte, jestli přijdete.", errName:"Napište prosím své jméno.", errSend:"Pečeť se nepodařilo otisknout. Zkuste to znovu, nebo nám odpovězte v DM.",
+    stampYes:"Podepsáno", stampNo:"Zaznamenáno",
+    doneYes:"Smlouva platí. Adresu pošleme do DM.",
+    doneNo:"Škoda. Díky za odpověď."
+  },
+  bratislava: {
+    lang:"sk",
+    no:"Zmluva č. 0411", sub:"Zaklínadlo väzby", drop:"R",
+    story:"ok 1726. Mefisto roztrhal zaklínadlo knihárky Doroty na päť veršov. Druhú noc po Dušičkách ho poskladáme.",
+    lWhen:"Kedy", when:"St 4. 11. 2026, 18:30",
+    lWhere:"Kde", where:"Pivnica v Starom Meste. Adresu pošleme.",
+    lDress:"Dress code", dress:"Temná elegancia",
+    clause:"Neprítomnosť sa neodpúšťa.",
+    lAttend:"Prídete?", yes:"Podpisujem. Prídem.", yesSmall:"Kruh so mnou môže rátať",
+    no2:"Tentokrát nie.", noSmall:"Mefisto si ma nevezme",
+    lName:"Meno a priezvisko", lDiet:"Strava a alergie", dietPh:"vegán, bez lepku, orechy…",
+    photo:"Môžete ma na akcii fotiť a natáčať.",
+    lNote:"Odkaz pre hostiteľku (nepovinné)", seal:"Zapečatiť",
+    privacy:"Údaje použijeme len na organizáciu večera.",
+    again:"Zmeniť odpoveď",
+    errAttend:"Vyberte, či prídete.", errName:"Napíšte prosím svoje meno.", errSend:"Pečať sa nepodarilo odtlačiť. Skúste to znova, alebo nám odpovedzte v DM.",
+    stampYes:"Podpísané", stampNo:"Zaznamenané",
+    doneYes:"Zmluva platí. Adresu pošleme do DM.",
+    doneNo:"Škoda. Vďaka za odpoveď."
+  }
+};
+
+const cfg = window.RSVP_CONFIG;
+const testMode = !/formResponse$/.test(cfg.formAction);
+document.getElementById("testmode").hidden = !testMode;
+
+let city = /bratislava|ba|sk/i.test(location.hash + location.search) ? "bratislava" : "praha";
+
+function render(){
+  const t = T[city];
+  document.documentElement.lang = t.lang;
+  document.querySelectorAll("[data-t]").forEach(el => { const k = el.dataset.t; if (t[k] != null) el.textContent = t[k]; });
+  document.querySelectorAll("[data-tp]").forEach(el => { el.placeholder = t[el.dataset.tp] || ""; });
+  document.querySelectorAll(".cities button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.city === city)));
+}
+document.querySelectorAll(".cities button").forEach(b => b.addEventListener("click", () => { city = b.dataset.city; render(); }));
+render();
+
+const form = document.getElementById("rsvp");
+const err = document.getElementById("err");
+form.addEventListener("change", e => {
+  if (e.target.name === "attend") {
+    const yes = e.target.value === "Ano";
+    document.querySelectorAll(".only-yes").forEach(el => el.hidden = !yes);
+  }
+});
+
+form.addEventListener("submit", async e => {
+  e.preventDefault();
+  const t = T[city];
+  const attend = form.attend.value;
+  const nameEl = document.getElementById("f-name"); const name = nameEl.value.trim();
+  if (!attend) { err.textContent = t.errAttend; return; }
+  if (!name) { err.textContent = t.errName; nameEl.focus(); return; }
+  err.textContent = "";
+  const yes = attend === "Ano";
+  const f = cfg.fields;
+  const data = new URLSearchParams();
+  data.append(f.name, name);
+  data.append(f.city, cfg.cityValues[city]);
+  data.append(f.attend, attend);
+  if (yes) {
+    const diet = document.getElementById("f-diet").value.trim();
+    if (diet) data.append(f.diet, diet);
+    data.append(f.photo, document.getElementById("f-photo").checked ? "Ano" : "Ne");
+  }
+
+  const btn = document.getElementById("submit");
+  btn.disabled = true;
+  try {
+    if (!testMode) {
+      await fetch(cfg.formAction, { method:"POST", mode:"no-cors", body:data });
+    } else {
+      console.info("Testovací režim, odeslalo by se:", Object.fromEntries(data));
+      await new Promise(r => setTimeout(r, 500));
+    }
+    document.getElementById("stamp").textContent = yes ? t.stampYes : t.stampNo;
+    document.getElementById("done-text").textContent = yes ? t.doneYes : t.doneNo;
+    form.hidden = true;
+    document.getElementById("done").hidden = false;
+  } catch (x) {
+    err.textContent = t.errSend;
+  } finally {
+    btn.disabled = false;
+  }
+});
+document.getElementById("again").addEventListener("click", () => {
+  document.getElementById("done").hidden = true; form.hidden = false;
+});
+
+
+/* jiskry */
+(() => {
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const c = document.getElementById("embers"); const ctx = c.getContext("2d");
+  let w, h, dpr, parts = [];
+  function size(){ dpr = Math.min(window.devicePixelRatio || 1, 2); w = c.width = innerWidth * dpr; h = c.height = innerHeight * dpr; }
+  size(); addEventListener("resize", size);
+  function spawn(){ return { x: Math.random()*w, y: h + Math.random()*h*0.3, r: (Math.random()*1.8+0.6)*dpr,
+    vy: -(Math.random()*0.6+0.25)*dpr, vx: (Math.random()-0.5)*0.3*dpr, life: Math.random()*0.5+0.5, t: Math.random()*6 }; }
+  for (let i=0;i<55;i++){ const p = spawn(); p.y = Math.random()*h; parts.push(p); }
+  function frame(){
+    ctx.clearRect(0,0,w,h);
+    for (const p of parts){
+      p.t += 0.02; p.x += p.vx + Math.sin(p.t)*0.25*dpr; p.y += p.vy;
+      const a = Math.max(0, Math.min(1, p.y / h)) * p.life;
+      const g = ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r*4);
+      g.addColorStop(0, `rgba(255,200,120,${a})`); g.addColorStop(0.4, `rgba(255,122,46,${a*0.6})`); g.addColorStop(1, "rgba(255,122,46,0)");
+      ctx.fillStyle = g; ctx.beginPath(); ctx.arc(p.x,p.y,p.r*4,0,Math.PI*2); ctx.fill();
+      if (p.y < -20) Object.assign(p, spawn());
+    }
+    if (!reduce) requestAnimationFrame(frame);
+  }
+  frame();
+})();
+</script>
+</body>
+</html>
